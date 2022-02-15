@@ -22,6 +22,7 @@
 		79BDBF1927A35220000912EF /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BDBF1827A35220000912EF /* Task.m */; };
 		79E722BD27A4D1D3000B6D40 /* InProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E722BC27A4D1D3000B6D40 /* InProgressViewController.m */; };
 		79F90D8027A67617003A8737 /* DetailsDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F90D7F27A67617003A8737 /* DetailsDoneViewController.m */; };
+		CDA81E9627BAE71000DCF1B9 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDA81E9527BAE71000DCF1B9 /* UserNotifications.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		79E722BC27A4D1D3000B6D40 /* InProgressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InProgressViewController.m; sourceTree = "<group>"; };
 		79F90D7E27A67617003A8737 /* DetailsDoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsDoneViewController.h; sourceTree = "<group>"; };
 		79F90D7F27A67617003A8737 /* DetailsDoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsDoneViewController.m; sourceTree = "<group>"; };
+		CDA81E9527BAE71000DCF1B9 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDA81E9627BAE71000DCF1B9 /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +102,7 @@
 			children = (
 				79BDBEF027A30EEE000912EF /* ToDoList */,
 				79BDBEEF27A30EED000912EF /* Products */,
+				CDA81E9427BAE70F00DCF1B9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -188,6 +192,14 @@
 				79F90D7F27A67617003A8737 /* DetailsDoneViewController.m */,
 			);
 			path = DetailsDoneVC;
+			sourceTree = "<group>";
+		};
+		CDA81E9427BAE70F00DCF1B9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CDA81E9527BAE71000DCF1B9 /* UserNotifications.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

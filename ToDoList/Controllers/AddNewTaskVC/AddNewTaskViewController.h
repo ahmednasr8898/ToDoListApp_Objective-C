@@ -7,12 +7,10 @@
 
 #import <UIKit/UIKit.h>
 #import "TaskProtocol.h"
-NS_ASSUME_NONNULL_BEGIN
+#import <UserNotifications/UserNotifications.h>
 
-@interface AddNewTaskViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface AddNewTaskViewController : UIViewController
 
 @property id <TaskProtocol> taskProto;
 
 @end
-
-NS_ASSUME_NONNULL_END

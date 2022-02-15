@@ -14,13 +14,15 @@
     NSMutableArray<Task*> *doneMid;
     NSMutableArray<Task*> *doneLow;
     NSMutableArray<Task*> *doneArray;
+    NSString *priorityName;
     NSUserDefaults *userDefaults;
     NSData *dataSaved;
     NSSet *setDoneTasks;
+    NSData *data;
 }
 
-@property (weak, nonatomic) IBOutlet UISearchBar *inProgressSearchBar;
-@property (weak, nonatomic) IBOutlet UITableView *inProgressTableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *doneSearchBar;
+@property (weak, nonatomic) IBOutlet UITableView *doneTableView;
 
 @end
 
@@ -38,8 +40,8 @@
 }
 
 -(void) setUp{
-    _inProgressTableView.dataSource = self;
-    _inProgressTableView.delegate =  self;
+    _doneTableView.dataSource = self;
+    _doneTableView.delegate =  self;
     userDefaults = [NSUserDefaults standardUserDefaults];
 }
 
@@ -47,6 +49,7 @@
     doneHigh = [NSMutableArray new];
     doneMid = [NSMutableArray new];
     doneLow = [NSMutableArray new];
+    self.navigationController.navigationBar.tintColor = UIColor.lightGrayColor;
 }
 
 -(void) setInProgressTask{
@@ -60,24 +63,18 @@
         if([[[doneArray[i] priortyTask] priorityStr] isEqual:@"high"]){
             [doneHigh addObject:doneArray[i]];
             [doneHigh[idHigh] setTaskID:i];
-            printf("arr id: %d\n",i);
-            printf("high id: %d\n",doneHigh[idHigh].taskID);
             idHigh++;
          }else if([[[doneArray[i] priortyTask] priorityStr] isEqual:@"mid"]){
              [doneMid addObject: doneArray[i]];
              [doneMid[idMid] setTaskID:i];
-             printf("arr id: %d\n",i);
-             printf("mid id: %d\n",doneMid[idMid].taskID);
              idMid++;
         }else if([[[doneArray[i] priortyTask] priorityStr] isEqual:@"low"]){
             [doneLow addObject:doneArray[i]];
             [doneLow[idLow] setTaskID:i];
-            printf("arr id: %d\n",i);
-            printf("low id: %d\n",doneLow[idLow].taskID);
             idLow++;
         }
     }
-    [self.inProgressTableView reloadData];
+    [self.doneTableView reloadData];
 }
 
 //tableView
@@ -106,27 +103,49 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DoneCell" forIndexPath:indexPath];
+    
+    UIImageView *img = [cell viewWithTag:1];
+    UILabel *titleLabel = [cell viewWithTag:2];
+    UILabel *descriptionLabel = [cell viewWithTag:3];
+    UIView *view = [cell viewWithTag:4];
+    
+    view.layer.cornerRadius  = 20;
+    view.layer.shadowRadius  = 2;
+    view.layer.shadowColor   = [UIColor colorWithRed:176.f/255.f green:199.f/255.f blue:226.f/255.f alpha:1.f].CGColor;
+    view.layer.shadowOffset  = CGSizeMake(0.0f, 0.0f);
+    view.layer.shadowOpacity = 0.9f;
+    view.layer.masksToBounds = NO;
+    
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = doneHigh[indexPath.row].titleTask;
-            cell.detailTextLabel.text = doneHigh[indexPath.row].descriptionTask;
-            cell.imageView.image = [UIImage imageNamed:doneHigh[indexPath.row].priortyTask.PriorityImg];
+            view.backgroundColor = [UIColor colorWithRed:243/256.0 green:197/256.0 blue:197/256.0 alpha:1.0];
+            priorityName = doneHigh[indexPath.row].priortyTask.priorityStr;
+            img.image = [UIImage imageNamed: priorityName];
+            titleLabel.text = doneHigh[indexPath.row].titleTask;
+            descriptionLabel.text = doneHigh[indexPath.row].descriptionTask;
             break;
         case 1:
-            cell.textLabel.text = doneMid[indexPath.row].titleTask;
-            cell.detailTextLabel.text = doneMid[indexPath.row].descriptionTask;
-            cell.imageView.image = [UIImage imageNamed:doneMid[indexPath.row].priortyTask.PriorityImg];
+            view.backgroundColor = [UIColor colorWithRed:255/256.0 green:206/256.0 blue:69/256.0 alpha:1.0];
+            priorityName = doneMid[indexPath.row].priortyTask.priorityStr;
+            img.image = [UIImage imageNamed: priorityName];
+            titleLabel.text = doneMid[indexPath.row].titleTask;
+            descriptionLabel.text = doneMid[indexPath.row].descriptionTask;
             break;
         case 2:
-            cell.textLabel.text = doneLow[indexPath.row].titleTask;
-            cell.detailTextLabel.text = doneLow[indexPath.row].descriptionTask;
-            cell.imageView.image = [UIImage imageNamed:doneLow[indexPath.row].priortyTask.PriorityImg];;
+            view.backgroundColor = [UIColor colorWithRed:192/256.0 green:216/256.0 blue:192/256.0 alpha:1.0];
+            priorityName = doneLow[indexPath.row].priortyTask.priorityStr;
+            img.image = [UIImage imageNamed: priorityName];
+            titleLabel.text = doneLow[indexPath.row].titleTask;
+            descriptionLabel.text = doneLow[indexPath.row].descriptionTask;
             break;
         default:
             break;
     }
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 120;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -143,7 +162,7 @@
             if([doneMid count] == 0){
                 titel = @"";
             }else{
-                titel = @"Med Priority";
+                titel = @"Mid Priority";
             }
             break;
         case 2:
@@ -160,14 +179,11 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     DetailsDoneViewController *detailsDoneTaskVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsDoneViewController"];
-    
     switch (indexPath.section) {
         case 0:
             for(int i = 0; i < [doneArray count]; i++){
                 if(doneArray[i].taskID == doneHigh[indexPath.row].taskID){
-                    //[detailsDoneTaskVC set]
                     [detailsDoneTaskVC setSelectedTask:doneHigh[indexPath.row]];
                 }
             }
@@ -199,7 +215,6 @@
         
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:NULL];
         
-        
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
             switch (indexPath.section) {
@@ -208,45 +223,39 @@
                         if(self->doneArray[i].taskID == self->doneHigh[indexPath.row].taskID){
                             [self->doneArray removeObjectAtIndex:i];
                             NSError *error;
-                            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self->doneArray requiringSecureCoding:YES error:&error];
-                            [self->userDefaults setObject:data forKey:@"DoneTasks"];
-                            //[self getTasksArray];
-                            //[self setInProgressTask];
-                            [self.inProgressTableView reloadData];
+                            self->data = [NSKeyedArchiver archivedDataWithRootObject:self->doneArray requiringSecureCoding:YES error:&error];
+                            [self->userDefaults setObject:self->data forKey:@"DoneTasks"];
+                            [self.doneTableView reloadData];
                         }
                     }
                     [self->doneHigh removeObjectAtIndex:indexPath.row];
-                    [self.inProgressTableView reloadData];
+                    [self.doneTableView reloadData];
                     break;
                 case 1:
                     for(int i = 0; i < [self->doneArray count]; i++){
                         if(self->doneArray[i].taskID == self->doneMid[indexPath.row].taskID){
                             [self->doneArray removeObjectAtIndex:i];
                             NSError *error;
-                            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self->doneArray requiringSecureCoding:YES error:&error];
-                            [self->userDefaults setObject:data forKey:@"DoneTasks"];
-                            //[self getTasksArray];
-                            //[self setInProgressTask];
-                            [self.inProgressTableView reloadData];
+                            self->data = [NSKeyedArchiver archivedDataWithRootObject:self->doneArray requiringSecureCoding:YES error:&error];
+                            [self->userDefaults setObject:self->data forKey:@"DoneTasks"];
+                            [self.doneTableView reloadData];
                         }
                     }
                     [self->doneMid removeObjectAtIndex:indexPath.row];
-                    [self.inProgressTableView reloadData];
+                    [self.doneTableView reloadData];
                     break;
                 case 2:
                     for(int i = 0; i < [self->doneArray count]; i++){
                         if(self->doneArray[i].taskID == self->doneLow[indexPath.row].taskID){
                             [self->doneArray removeObjectAtIndex:i];
                             NSError *error;
-                            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self->doneArray requiringSecureCoding:YES error:&error];
-                            [self->userDefaults setObject:data forKey:@"DoneTasks"];
-                            //[self getTasksArray];
-                            //[self setInProgressTask];
-                            [self.inProgressTableView reloadData];
+                            self->data = [NSKeyedArchiver archivedDataWithRootObject:self->doneArray requiringSecureCoding:YES error:&error];
+                            [self->userDefaults setObject:self->data forKey:@"DoneTasks"];
+                            [self.doneTableView reloadData];
                         }
                     }
                     [self->doneLow removeObjectAtIndex:indexPath.row];
-                    [self.inProgressTableView reloadData];
+                    [self.doneTableView reloadData];
                     break;
                     
                 default:

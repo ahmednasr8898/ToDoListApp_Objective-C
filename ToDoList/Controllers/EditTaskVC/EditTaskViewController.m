@@ -9,274 +9,263 @@
 #import "Priority.h"
 
 @interface EditTaskViewController (){
-    NSMutableArray *priorityArray;
     NSMutableArray *tasksArray;
+    NSMutableArray *myTasksArray;
     NSMutableArray *InProgressArray;
+    Task *taskThatMove;
     NSUserDefaults *userDefaults;
     NSData *dataSaved;
     NSSet *setTasks;
     NSData *data;
     int indexOfSelectedTask;
-    Priority *selectedPriority;
-    NSString *priorityStr1;
-    NSString *priorityImg1;
+    
+    //selectedDeadLineDate
+    NSString *selectedDeadLineDateStr;
+    NSDateFormatter *selectedDeadLineFormatter;
+    NSDate *selectedDate;
+    NSDateFormatter* deadLineDateFormatter;
+    NSDateFormatter* deadLineTimeFormatter;
+    NSString* deadLineDateStr;
+    NSString* deadLineTimeStr;
+    NSDate * deadLineDate;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTaskTextField;
-@property (weak, nonatomic) IBOutlet UITextField *descriptionTaskTextField;
-@property (weak, nonatomic) IBOutlet UILabel *dateTaskLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *priortyImageView;
-@property (weak, nonatomic) IBOutlet UIButton *choosePriortyButton;
-@property (weak, nonatomic) IBOutlet UITableView *priortyTableView;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UIDatePicker *deadLineDatePicker;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *prioritySegment;
 @property (weak, nonatomic) IBOutlet UIButton *addInProgressBtn;
 @property (weak, nonatomic) IBOutlet UIButton *addDoneBtn;
+@property (weak, nonatomic) IBOutlet UIButton *editBtn;
 
 @end
 
 @implementation EditTaskViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setUpDesign];
     [self setUtility];
     [self setTask];
-    [self setPriorityArray];
 }
 
 -(void) setUtility{
-    _priortyTableView.delegate = self;
-    _priortyTableView.dataSource = self;
-    self.priortyTableView.hidden = YES;
     userDefaults = [NSUserDefaults standardUserDefaults];
     tasksArray = [NSMutableArray new];
+    myTasksArray = [NSMutableArray new];
     InProgressArray = [NSMutableArray new];
     indexOfSelectedTask = _rowOfSelectedTask;
-    priorityStr1 = _selectedTask.priortyTask.priorityStr;
-    priorityImg1 = _selectedTask.priortyTask.PriorityImg;
-    selectedPriority = [Priority new];
-    _addInProgressBtn.layer.cornerRadius = 18;
-    _addDoneBtn.layer.cornerRadius = 18;
+    selectedDeadLineDateStr = [NSString new];
+    selectedDeadLineFormatter = [[NSDateFormatter alloc] init];
+    deadLineDateFormatter = [[NSDateFormatter alloc] init];
+    deadLineTimeFormatter = [[NSDateFormatter alloc] init];
+    taskThatMove = [Task new];
+}
+
+-(void) setUpDesign{
+    _addDoneBtn.layer.cornerRadius = 20;
+    _addInProgressBtn.layer.cornerRadius = 15;
+    _editBtn.layer.shadowColor = UIColor.blackColor.CGColor;
+    _editBtn.layer.shadowOffset = CGSizeMake(5, 5);
+    _editBtn.layer.shadowOpacity = 1;
+    _editBtn.layer.shadowRadius = 5;
+    _editBtn.layer.cornerRadius = 50;
+    self.navigationController.navigationBar.tintColor = UIColor.darkGrayColor;
 }
 
 -(void) setTask{
     _titleTaskTextField.text = _selectedTask.titleTask;
-    _descriptionTaskTextField.text = _selectedTask.descriptionTask;
-    [_choosePriortyButton setTitle:_selectedTask.priortyTask.priorityStr forState:UIControlStateNormal];
-    _priortyImageView.image = [UIImage imageNamed:_selectedTask.priortyTask.PriorityImg];
-    _dateTaskLabel.text = _selectedTask.dateTask;
+    _descriptionTextView.text = _selectedTask.descriptionTask;
+    [self setPriortyTask];
+    [self setDeadLineDateTask];
 }
 
--(void) setPriorityArray{
-    priorityArray =[NSMutableArray new];
-    Priority *high = [Priority new];
-    [high setPriorityStr:@"high"];
-    [high setPriorityImg:@"high"];
-    
-    Priority *mid = [Priority new];
-    [mid setPriorityStr:@"mid"];
-    [mid setPriorityImg:@"mid"];
-    
-    Priority *low = [Priority new];
-    [low setPriorityStr:@"low"];
-    [low setPriorityImg:@"low"];
-    
-    [priorityArray addObject:high];
-    [priorityArray addObject:mid];
-    [priorityArray addObject:low];
-}
-
-- (IBAction)EditTaskDidPressed:(id)sender {
-    [self showConfirmAlert];
-    
-}
-
-- (IBAction)choosePriortyDidPressed:(id)sender {
-    if(self.priortyTableView.hidden == YES){
-        self.priortyTableView.hidden =NO;
-    }else{
-        self.priortyTableView.hidden = YES;
+-(void) setPriortyTask{
+    if([_selectedTask.priortyTask.priorityStr isEqual:@"high"]){
+        _prioritySegment.selectedSegmentIndex = 0;
+    }else if([_selectedTask.priortyTask.priorityStr isEqual:@"mid"]){
+        _prioritySegment.selectedSegmentIndex = 1;
+    }else if([_selectedTask.priortyTask.priorityStr isEqual:@"low"]){
+        _prioritySegment.selectedSegmentIndex = 2;
     }
 }
 
-//TableView
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+-(void) setDeadLineDateTask{
+    selectedDeadLineDateStr = [_selectedTask.deadLineDateTask stringByAppendingString:@" "];
+    selectedDeadLineDateStr = [selectedDeadLineDateStr stringByAppendingString:_selectedTask.deadLineTimeTask];
+    [selectedDeadLineFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+    [selectedDeadLineFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"Egypt/Cairo"]];
+    selectedDate = [selectedDeadLineFormatter dateFromString:selectedDeadLineDateStr];
+    _deadLineDatePicker.date = selectedDate;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [priorityArray count];
+- (IBAction)EditTaskDidPressed:(id)sender {
+    [self showConfirmEditTaskAlert];
 }
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    //make tableView for priorty menu
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PriorityMenuCell" forIndexPath:indexPath];
-    cell.textLabel.text = [priorityArray[indexPath.row] priorityStr];
-    cell.imageView.image = [UIImage imageNamed: [priorityArray[indexPath.row] PriorityImg]];
-    return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    [self.choosePriortyButton setTitle:[priorityArray[indexPath.row] priorityStr] forState:UIControlStateNormal];
-    self.priortyTableView.hidden = YES;
-    _priortyImageView.image = [UIImage imageNamed:[priorityArray[indexPath.row] PriorityImg]];
-    priorityStr1 = [priorityArray[indexPath.row] priorityStr];
-    priorityImg1 = [priorityArray[indexPath.row] PriorityImg];
-}
-
-
-
--(void) showConfirmAlert{
+-(void) showConfirmEditTaskAlert{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure to edit this task" message:@"confirm edit task!" preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:NULL];
-    
-    
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //edit task
         [self editSelectedTask];
     }];
-    
     [alert addAction:cancelAction];
     [alert addAction:confirmAction];
     [self presentViewController:alert animated:YES completion:NULL];
 }
 
 -(void) editSelectedTask{
-    //get array from userdef
+    [self getArrayFromUserDef];
+    [self taskSelected];
+    [self passArrayAgainToUserDef];
+}
+
+-(void) getArrayFromUserDef{
     NSError *error;
     dataSaved = [userDefaults objectForKey:@"Task"];
     setTasks = [NSSet setWithArray:@[[NSArray class], [Task class]]];
     tasksArray = (NSMutableArray*)[NSKeyedUnarchiver unarchivedObjectOfClasses:setTasks fromData:dataSaved error:&error];
-    
-    //edit in selected task
-    [tasksArray[indexOfSelectedTask] setTitleTask: _titleTaskTextField.text];
-    [tasksArray[indexOfSelectedTask] setDescriptionTask: _descriptionTaskTextField.text];
-    [tasksArray[indexOfSelectedTask] setDateTask: _dateTaskLabel.text];
-    [selectedPriority setPriorityStr:priorityStr1];
-    [selectedPriority setPriorityImg:priorityImg1];
-    [tasksArray[indexOfSelectedTask] setPriortyTask:selectedPriority];
-    
-    //pass array agin in user def
+}
+
+-(void) passArrayAgainToUserDef{
+    NSError *error;
     data = [NSKeyedArchiver archivedDataWithRootObject:tasksArray requiringSecureCoding:YES error:&error];
     [userDefaults setObject:data forKey:@"Task"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void) taskSelected{
+    [self getDeadLineDateTask];
+    [tasksArray[indexOfSelectedTask] setTitleTask: _titleTaskTextField.text];
+    [tasksArray[indexOfSelectedTask] setDescriptionTask: _descriptionTextView.text];
+    [tasksArray[indexOfSelectedTask] setPriortyTask: [self getTaskPriority]];
+    [tasksArray[indexOfSelectedTask] setDeadLineDateTask:deadLineDateStr];
+    [tasksArray[indexOfSelectedTask] setDeadLineTimeTask: deadLineTimeStr];
+}
+
 - (IBAction)adTaskToInProgressDidPressed:(id)sender {
-    printf("asasa");
     [self showConfirmAlertToInProgress];
 }
 
 -(void) showConfirmAlertToInProgress{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure to move this task to in progress" message:@"cannot return again!" preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:NULL];
-    
-    
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        [self addToInProgress];
+        //move task to inProgress section
+        [self addTaskToInProgress];
     }];
-    
     [alert addAction:cancelAction];
     [alert addAction:confirmAction];
     [self presentViewController:alert animated:YES completion:NULL];
 }
 
--(void) addToInProgress{
-    Task *t = [Task new];
-    [t setTitleTask:_titleTaskTextField.text];
-    [t setDescriptionTask: _descriptionTaskTextField.text];
-    [t setDateTask: _dateTaskLabel.text];
-    [selectedPriority setPriorityStr:priorityStr1];
-    [selectedPriority setPriorityImg:priorityImg1];
-    [t setPriortyTask:selectedPriority];
-    
-    NSError *error;
-    if([userDefaults objectForKey:@"InProgressTasks"] == nil){
-        //handle
-        [InProgressArray addObject:t];
-       NSData *data = [NSKeyedArchiver archivedDataWithRootObject:InProgressArray requiringSecureCoding:YES error:&error];
-        [userDefaults setObject:data forKey:@"InProgressTasks"];
-    }else{
-       NSData *dataSaved = [userDefaults objectForKey:@"InProgressTasks"];
-        NSSet *setTasks = [NSSet setWithArray:@[[NSArray class], [Task class]]];
-        InProgressArray = (NSMutableArray*)[NSKeyedUnarchiver unarchivedObjectOfClasses:setTasks fromData:dataSaved error:&error];
-        //add new task in array in userdef
-        [InProgressArray addObject:t];
-        data = [NSKeyedArchiver archivedDataWithRootObject:InProgressArray requiringSecureCoding:YES error:&error];
-        //pass array agin in user def
-        [userDefaults setObject:data forKey:@"InProgressTasks"];
-    }
-    //delete task from to do list
-    dataSaved = [userDefaults objectForKey:@"Task"];
-    setTasks = [NSSet setWithArray:@[[NSArray class], [Task class]]];
-    tasksArray = (NSMutableArray*)[NSKeyedUnarchiver unarchivedObjectOfClasses:setTasks fromData:dataSaved error:&error];
-    [tasksArray removeObjectAtIndex:_rowOfSelectedTask];
-    data = [NSKeyedArchiver archivedDataWithRootObject:tasksArray requiringSecureCoding:YES error:&error];
-    [userDefaults setObject:data forKey:@"Task"];
-    [self.navigationController popViewControllerAnimated:YES];
+-(void) addTaskToInProgress{
+    [self myTaskSelected];
+    [self checkTaskThatMovedFoundInUserDef:@"InProgressTasks"];
+    [self deleteTaskThatMovedFromTasksList];
 }
 
-
 - (IBAction)addToDoneTasksDidPressed:(id)sender {
-    printf("sdedsdsdsdsds");
     [self showConfirmAlertToDone];
 }
 
 -(void) showConfirmAlertToDone{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure to move this task to Done" message:@"cannot return again!" preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:NULL];
-    
-    
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        [self addToDone];
+        [self addTaskToDone];
     }];
-    
     [alert addAction:cancelAction];
     [alert addAction:confirmAction];
     [self presentViewController:alert animated:YES completion:NULL];
 }
 
--(void) addToDone{
-    Task *t = [Task new];
-    [t setTitleTask:_titleTaskTextField.text];
-    [t setDescriptionTask: _descriptionTaskTextField.text];
-    [t setDateTask: _dateTaskLabel.text];
-    [selectedPriority setPriorityStr:priorityStr1];
-    [selectedPriority setPriorityImg:priorityImg1];
-    [t setPriortyTask:selectedPriority];
-    
-    NSError *error;
-    if([userDefaults objectForKey:@"DoneTasks"] == nil){
-        //handle
-        [InProgressArray addObject:t];
-       NSData *data = [NSKeyedArchiver archivedDataWithRootObject:InProgressArray requiringSecureCoding:YES error:&error];
-        [userDefaults setObject:data forKey:@"DoneTasks"];
+-(void) addTaskToDone{
+    [self myTaskSelected];
+    [self checkTaskThatMovedFoundInUserDef:@"DoneTasks"];
+    [self deleteTaskThatMovedFromTasksList];
+}
+
+-(void) checkTaskThatMovedFoundInUserDef: (NSString*) keyIndetifier{
+    if([userDefaults objectForKey:keyIndetifier] == nil){
+        [self taskIsNotFoundInUserDef:keyIndetifier];
     }else{
-       NSData *dataSaved = [userDefaults objectForKey:@"DoneTasks"];
-        NSSet *setTasks = [NSSet setWithArray:@[[NSArray class], [Task class]]];
-        InProgressArray = (NSMutableArray*)[NSKeyedUnarchiver unarchivedObjectOfClasses:setTasks fromData:dataSaved error:&error];
-        //add new task in array in userdef
-        [InProgressArray addObject:t];
-        data = [NSKeyedArchiver archivedDataWithRootObject:InProgressArray requiringSecureCoding:YES error:&error];
-        //pass array agin in user def
-        [userDefaults setObject:data forKey:@"DoneTasks"];
+        [self taskIsFoundInUserDef:keyIndetifier];
     }
-    //delete task from to do list
+}
+
+-(void) taskIsNotFoundInUserDef: (NSString*) keyIndetifier{
+    NSError *error;
+    [myTasksArray addObject:taskThatMove];
+    data = [NSKeyedArchiver archivedDataWithRootObject:myTasksArray requiringSecureCoding:YES error:&error];
+    [userDefaults setObject:data forKey:keyIndetifier];
+}
+
+-(void) taskIsFoundInUserDef: (NSString*) keyIndetifier{
+    NSError *error;
+    dataSaved = [userDefaults objectForKey:keyIndetifier];
+    setTasks = [NSSet setWithArray:@[[NSArray class], [Task class]]];
+    myTasksArray = (NSMutableArray*)[NSKeyedUnarchiver unarchivedObjectOfClasses:setTasks fromData:dataSaved error:&error];
+    //add new task in array in userdef
+    [myTasksArray addObject:taskThatMove];
+    data = [NSKeyedArchiver archivedDataWithRootObject:myTasksArray requiringSecureCoding:YES error:&error];
+    //pass array agin in user def
+    [userDefaults setObject:data forKey:keyIndetifier];
+}
+
+-(void) myTaskSelected{
+    [self getDeadLineDateTask];
+    [taskThatMove setTitleTask:_titleTaskTextField.text];
+    [taskThatMove setDescriptionTask: _descriptionTextView.text];
+    [taskThatMove setPriortyTask: [self getTaskPriority]];
+    [taskThatMove setDeadLineDateTask:deadLineDateStr];
+    [taskThatMove setDeadLineTimeTask: deadLineTimeStr];
+    [taskThatMove setDateTask:_selectedTask.dateTask];
+}
+
+-(void) deleteTaskThatMovedFromTasksList{
+    NSError *error;
     dataSaved = [userDefaults objectForKey:@"Task"];
     setTasks = [NSSet setWithArray:@[[NSArray class], [Task class]]];
     tasksArray = (NSMutableArray*)[NSKeyedUnarchiver unarchivedObjectOfClasses:setTasks fromData:dataSaved error:&error];
     [tasksArray removeObjectAtIndex:_rowOfSelectedTask];
     data = [NSKeyedArchiver archivedDataWithRootObject:tasksArray requiringSecureCoding:YES error:&error];
     [userDefaults setObject:data forKey:@"Task"];
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(Priority*) getTaskPriority{
+    Priority *taskPriority = [Priority new];
+    switch (_prioritySegment.selectedSegmentIndex) {
+        case 0:
+            //high priorty
+            taskPriority.priorityStr = @"high";
+            taskPriority.PriorityImg = @"high";
+            break;
+        case 1:
+            //mid priorty
+            taskPriority.priorityStr = @"mid";
+            taskPriority.PriorityImg = @"mid";
+            break;
+        case 2:
+            //low priorty
+            taskPriority.priorityStr = @"low";
+            taskPriority.PriorityImg = @"low";
+            break;
+        default:
+            break;
+    }
+    return taskPriority;
+}
+
+-(void) getDeadLineDateTask{
+    deadLineDate =  _deadLineDatePicker.date;
+    [deadLineDateFormatter setDateFormat:@"yyyy-MM-dd"];
+    [deadLineTimeFormatter setDateFormat:@"hh:mm"];
+    deadLineDateStr = [deadLineDateFormatter stringFromDate:deadLineDate];
+    deadLineTimeStr = [deadLineTimeFormatter stringFromDate:deadLineDate];
+    //printf("date is : %s and time is: %s", [deadLineDateStr UTF8String], [deadLineTimeStr UTF8String]);
+}
 
 @end

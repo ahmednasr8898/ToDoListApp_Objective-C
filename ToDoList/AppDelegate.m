@@ -13,8 +13,17 @@
 
 @implementation AppDelegate
 
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    
+    UNNotificationPresentationOptions presentationOptions = UNNotificationPresentationOptionSound + UNNotificationPresentationOptionBanner;
+    
+    //UNNotificationPresentationOptionAlert + UNNotificationPresentationOptionSound;
+    completionHandler(presentationOptions);
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
     // Override point for customization after application launch.
     return YES;
 }

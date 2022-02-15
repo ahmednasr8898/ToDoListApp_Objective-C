@@ -15,6 +15,8 @@
 @property NSString *descriptionTask;
 @property Priority *priortyTask;
 @property NSString *dateTask;
+@property NSString *deadLineDateTask;
+@property NSString *deadLineTimeTask;
 
 -(void) encodeWithCoder:(NSCoder *)coder;
 

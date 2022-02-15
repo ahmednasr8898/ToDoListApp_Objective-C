@@ -14,6 +14,7 @@
     NSMutableArray<Task *> *tasksArray;
     NSMutableArray<Task *> *inProgoressArray;
     NSMutableArray<Task *> *searchTaskArray;
+    NSString *priorityName;
     NSUserDefaults *userDefaults;
     NSData *dataSaved;
     NSData *data;
@@ -32,7 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    isSearching = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -43,11 +43,15 @@
 -(void) setUtility{
     _TasksTableView.delegate = self;
     _TasksTableView.dataSource = self;
+    _TasksTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _TaskssearchBar.delegate = self;
-    
+    isSearching = NO;
+    _TaskssearchBar.text = @"";
+    _resultsLabel.hidden = YES;
     userDefaults = [NSUserDefaults standardUserDefaults];
     tasksArray = [NSMutableArray new];
     inProgoressArray = [NSMutableArray new];
+    self.navigationController.navigationBar.tintColor = UIColor.lightGrayColor;
 }
 
 -(void) getTasksArray{
@@ -73,41 +77,62 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TasksCell" forIndexPath:indexPath];
     
+    UIImageView *img = [cell viewWithTag:1];
+    UILabel *titleLabel = [cell viewWithTag:2];
+    UILabel *descriptionLabel = [cell viewWithTag:3];
+    UIView *view = [cell viewWithTag:4];
+    
+    view.layer.cornerRadius = 20;
+    view.layer.shadowRadius  = 2;
+    view.layer.shadowColor   = [UIColor colorWithRed:176.f/255.f green:199.f/255.f blue:226.f/255.f alpha:1.f].CGColor;
+    view.layer.shadowOffset  = CGSizeMake(0.0f, 0.0f);
+    view.layer.shadowOpacity = 0.9f;
+    view.layer.masksToBounds = NO;
+    
     if(isSearching){
-        NSString *priorityName = searchTaskArray[indexPath.row].priortyTask.priorityStr;
-        cell.textLabel.text = searchTaskArray[indexPath.row].titleTask;
-        cell.imageView.image = [UIImage imageNamed: priorityName];
+        priorityName = searchTaskArray[indexPath.row].priortyTask.priorityStr;
+        img.image = [UIImage imageNamed: priorityName];
+        titleLabel.text = searchTaskArray[indexPath.row].titleTask;
+        descriptionLabel.text = searchTaskArray[indexPath.row].descriptionTask;
         
     }else{
-        NSString *priorityName = tasksArray[indexPath.row].priortyTask.priorityStr;
-        cell.textLabel.text = tasksArray[indexPath.row].titleTask;
-        cell.imageView.image = [UIImage imageNamed: priorityName];
+        priorityName = tasksArray[indexPath.row].priortyTask.priorityStr;
+        img.image = [UIImage imageNamed: priorityName];
+        titleLabel.text = tasksArray[indexPath.row].titleTask;
+        descriptionLabel.text = tasksArray[indexPath.row].descriptionTask;
+    }
+    
+    if([priorityName isEqual:@"high"]){
+        view.backgroundColor = [UIColor colorWithRed:243/256.0 green:197/256.0 blue:197/256.0 alpha:1.0];
+    }else if ([priorityName isEqual:@"mid"]){
+        view.backgroundColor = [UIColor colorWithRed:255/256.0 green:206/256.0 blue:69/256.0 alpha:1.0];
+    }else if ([priorityName isEqual:@"low"]){
+        view.backgroundColor = [UIColor colorWithRed:192/256.0 green:216/256.0 blue:192/256.0 alpha:1.0];
     }
     return  cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+    return 120;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(editingStyle == UITableViewCellEditingStyleDelete){
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure to delet this task" message:@"cannot return again!" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:NULL];
-        
-        
-        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            [self deleteTaskWithIndexOfRow:indexPath.row];
-        }];
-        
-        [alert addAction:cancelAction];
-        [alert addAction:confirmAction];
-        [self presentViewController:alert animated:YES completion:NULL];
+        [self showConfirmAlertToDeleteWithRow:indexPath.row];
     }
+}
+
+-(void) showConfirmAlertToDeleteWithRow: (NSInteger) row{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure to delet this task" message:@"cannot return again!" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:NULL];
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self deleteTaskWithIndexOfRow:row];
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:confirmAction];
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 -(void) deleteTaskWithIndexOfRow:(NSInteger) row{
@@ -120,21 +145,21 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     EditTaskViewController *editTaskVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EditTaskViewController"];
-    
     [editTaskVC setRowOfSelectedTask:(int) indexPath.row];
     if(isSearching){
         [editTaskVC setSelectedTask:searchTaskArray[indexPath.row]];
     }else{
         [editTaskVC setSelectedTask:tasksArray[indexPath.row]];
     }
+    editTaskVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:editTaskVC animated:YES];
 }
 
 - (IBAction)addNewTaskDidPressed:(id)sender {
     AddNewTaskViewController *addNewTaskVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AddNewTaskViewController"];
     [addNewTaskVC setTaskProto:self];
+    addNewTaskVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:addNewTaskVC animated:YES];
 }
 
