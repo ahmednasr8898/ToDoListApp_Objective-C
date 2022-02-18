@@ -70,10 +70,29 @@
 
 -(void) setUpDesign{
     _addBtn.layer.cornerRadius = 25;
-    _titleTextField.layer.cornerRadius = 25;
+    _titleTextField.layer.cornerRadius = 30;
     _descriptionTextView.layer.cornerRadius = 25;
     _containerView.layer.cornerRadius = 25;
-    self.navigationController.navigationBar.tintColor = UIColor.lightGrayColor;
+    self.navigationController.navigationBar.tintColor = UIColor.blueColor;
+    
+    _titleTextField.layer.shadowColor = UIColor.grayColor.CGColor;
+    _titleTextField.layer.shadowOffset = CGSizeMake(2, 2);
+    _titleTextField.layer.shadowOpacity = 1;
+    _titleTextField.layer.shadowRadius = 4;
+    _titleTextField.layer.cornerRadius = 30;
+    
+    _containerView.layer.shadowColor = UIColor.grayColor.CGColor;
+    _containerView.layer.shadowOffset =  CGSizeMake(2, 2);
+    _containerView.layer.shadowOpacity = 1;
+    _containerView.layer.shadowRadius = 4;
+    _containerView.layer.cornerRadius = 30;
+    
+    _descriptionTextView.layer.shadowColor = UIColor.grayColor.CGColor;
+    _descriptionTextView.layer.shadowOffset = CGSizeMake(2, 2);
+    _descriptionTextView.layer.shadowOpacity = 1;
+    _descriptionTextView.layer.shadowRadius = 4;
+    _descriptionTextView.layer.cornerRadius = 30;
+    _descriptionTextView.layer.masksToBounds = NO;
 }
 
 -(void) setUpNotificationCenter{

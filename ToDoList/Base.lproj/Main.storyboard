@@ -161,7 +161,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Task" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ET4-kk-tnC">
                                 <rect key="frame" x="60" y="108" width="294" height="38.333333333333343"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="35"/>
-                                <color key="textColor" red="0.56862745100000001" green="0.76862745099999996" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.22352941179999999" green="0.54117647059999996" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fe6-Sg-PZi">
@@ -178,13 +178,13 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6VU-ZU-SPq">
                                 <rect key="frame" x="20" y="216.33333333333334" width="374" height="71.666666666666657"/>
-                                <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bPm-Rn-04p">
                                 <rect key="frame" x="20" y="348" width="374" height="128"/>
-                                <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -219,7 +219,7 @@
                                         <locale key="locale" localeIdentifier="en"/>
                                     </datePicker>
                                 </subviews>
-                                <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="Wj6-PJ-YAY" firstAttribute="leading" secondItem="iwy-zs-05b" secondAttribute="leading" id="4PF-6a-8gJ"/>
                                     <constraint firstAttribute="trailing" secondItem="OWu-lX-sSo" secondAttribute="trailing" constant="8" id="C03-Wn-ttd"/>
@@ -237,7 +237,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BA8-Kb-iko">
                                 <rect key="frame" x="68.666666666666686" y="760" width="277" height="54"/>
-                                <color key="backgroundColor" red="0.6588235294117647" green="0.76862745098039209" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.54117647059999996" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
                                     <attributedString key="attributedTitle">
@@ -326,7 +326,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.97254901959999995" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="QdI-7b-qxx" secondAttribute="trailing" constant="8" id="AkO-7y-dkB"/>
                                     <constraint firstItem="U9w-f4-0ma" firstAttribute="leading" secondItem="QdI-7b-qxx" secondAttribute="leading" id="Htb-vV-5IT"/>
@@ -342,13 +342,13 @@
                                 <rect key="frame" x="20" y="65" width="374" height="63"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="38"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.56790716289999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.22352941179999999" green="0.54117647059999996" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8d-GU-hzS">
                                 <rect key="frame" x="20" y="159" width="374" height="49"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.0" green="0.70588235290000001" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LSq-hS-TUX">
@@ -371,7 +371,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.97254901959999995" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RSt-an-neB"/>
@@ -437,7 +437,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Task" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTI-sw-PmF">
                                 <rect key="frame" x="60" y="98" width="294" height="38.333333333333343"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="35"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.56790716289999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.22352941179999999" green="0.54117647059999996" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5t-CE-oor">
@@ -522,7 +522,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kel-bk-wgu">
                                         <rect key="frame" x="203" y="48.333333333333258" width="131" height="44.666666666666657"/>
-                                        <color key="backgroundColor" red="0.6588235294" green="0.76862745099999996" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.0" green="0.70588235290000001" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.98431372549999996" green="0.97254901959999995" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
@@ -540,7 +540,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JVD-3W-fNm">
                                         <rect key="frame" x="40" y="48.333333333333258" width="131" height="44.666666666666657"/>
-                                        <color key="backgroundColor" red="0.6588235294" green="0.76862745099999996" blue="0.54997834199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.0" green="0.70588235294117641" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.98431372549999996" green="0.97254901959999995" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
@@ -574,7 +574,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSd-Bh-sQf">
                                 <rect key="frame" x="157" y="766.33333333333337" width="100" height="100"/>
-                                <color key="backgroundColor" red="0.33333333333333331" green="0.56790716286514609" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.22352941176470587" green="0.54117647058823526" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="XkQ-Rl-mA4"/>
                                     <constraint firstAttribute="height" constant="100" id="p5W-tW-GOq"/>
@@ -597,7 +597,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GNM-Y9-eST"/>
-                        <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="PTI-sw-PmF" firstAttribute="width" secondItem="ECD-rI-iY1" secondAttribute="width" multiplier="0.710145" id="4AE-oA-LGa"/>
                             <constraint firstItem="9qn-gV-fJy" firstAttribute="trailing" secondItem="V5t-CE-oor" secondAttribute="trailing" id="4zV-0p-Vq5"/>
@@ -636,6 +636,8 @@
                         <outlet property="deadLineDatePicker" destination="e4N-Rx-s3c" id="hHN-CM-nVq"/>
                         <outlet property="descriptionTextView" destination="emc-Gc-9av" id="csl-1X-zqz"/>
                         <outlet property="editBtn" destination="gSd-Bh-sQf" id="H7X-3C-T3L"/>
+                        <outlet property="myViewOne" destination="hcE-gd-YrT" id="1HA-LM-E9l"/>
+                        <outlet property="myViewTow" destination="QG2-oN-bAR" id="OBR-XB-vFW"/>
                         <outlet property="prioritySegment" destination="dTf-P7-lJY" id="RZO-0V-Gss"/>
                         <outlet property="titleTaskTextField" destination="9qn-gV-fJy" id="wXu-x3-qko"/>
                     </connections>
@@ -673,7 +675,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InProgress Task" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eM9-UC-x4b">
                                 <rect key="frame" x="60" y="98" width="294" height="38.333333333333343"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="35"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.56790716289999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.22352941179999999" green="0.54117647059999996" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMi-T8-0NM">
@@ -758,7 +760,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLO-Aq-fG3">
                                         <rect key="frame" x="112.33333333333333" y="50.333333333333258" width="149.33333333333337" height="47"/>
-                                        <color key="backgroundColor" red="0.6588235294" green="0.76862745099999996" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.0" green="0.70588235290000001" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.98431372549999996" green="0.97254901959999995" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
@@ -789,7 +791,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6b-MZ-j18">
                                 <rect key="frame" x="157" y="766.33333333333337" width="100" height="100"/>
-                                <color key="backgroundColor" red="0.33333333329999998" green="0.56790716289999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.54117647059999996" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Taq-JX-4t9"/>
                                     <constraint firstAttribute="height" constant="100" id="XLj-bl-G8W"/>
@@ -812,7 +814,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7kP-ka-N0l"/>
-                        <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dL8-uc-Zj6" firstAttribute="leading" secondItem="7kP-ka-N0l" secondAttribute="leading" constant="20" id="0tP-p5-4Sq"/>
                             <constraint firstItem="g92-w2-sVb" firstAttribute="trailing" secondItem="3RL-fX-c6J" secondAttribute="trailing" id="1VO-Bv-ivi"/>
@@ -850,6 +852,8 @@
                         <outlet property="deadLineDatePicker" destination="SXw-TP-KQ0" id="DkN-gK-nhP"/>
                         <outlet property="descriptionTextView" destination="iXn-Wt-o4F" id="3Z3-cP-iaj"/>
                         <outlet property="editBtn" destination="R6b-MZ-j18" id="7w9-la-JpG"/>
+                        <outlet property="myViewOne" destination="zNG-zE-zkF" id="ZoA-aR-9z7"/>
+                        <outlet property="myViewTow" destination="g92-w2-sVb" id="00n-wd-LM5"/>
                         <outlet property="prioritySegment" destination="VGT-Ym-1fu" id="8nL-DX-jRC"/>
                         <outlet property="titleTaskTextField" destination="3RL-fX-c6J" id="A2N-dm-MDS"/>
                     </connections>

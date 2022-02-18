@@ -37,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *addInProgressBtn;
 @property (weak, nonatomic) IBOutlet UIButton *addDoneBtn;
 @property (weak, nonatomic) IBOutlet UIButton *editBtn;
+@property (weak, nonatomic) IBOutlet UIView *myViewOne;
+@property (weak, nonatomic) IBOutlet UIView *myViewTow;
 
 @end
 
@@ -70,7 +72,32 @@
     _editBtn.layer.shadowOpacity = 1;
     _editBtn.layer.shadowRadius = 5;
     _editBtn.layer.cornerRadius = 50;
-    self.navigationController.navigationBar.tintColor = UIColor.darkGrayColor;
+    self.navigationController.navigationBar.tintColor = UIColor.blueColor;
+   
+    _titleTaskTextField.layer.shadowColor = UIColor.grayColor.CGColor;
+    _titleTaskTextField.layer.shadowOffset = CGSizeMake(2, 2);
+    _titleTaskTextField.layer.shadowOpacity = 1;
+    _titleTaskTextField.layer.shadowRadius = 4;
+    _titleTaskTextField.layer.cornerRadius = 30;
+    
+    _myViewOne.layer.shadowColor = UIColor.grayColor.CGColor;
+    _myViewOne.layer.shadowOffset =  CGSizeMake(2, 2);
+    _myViewOne.layer.shadowOpacity = 1;
+    _myViewOne.layer.shadowRadius = 4;
+    _myViewOne.layer.cornerRadius = 30;
+    
+    _myViewTow.layer.shadowColor = UIColor.grayColor.CGColor;
+    _myViewTow.layer.shadowOffset = CGSizeMake(2, 2);
+    _myViewTow.layer.shadowOpacity = 1;
+    _myViewTow.layer.shadowRadius = 4;
+    _myViewTow.layer.cornerRadius = 30;
+    
+    _descriptionTextView.layer.shadowColor = UIColor.grayColor.CGColor;
+    _descriptionTextView.layer.shadowOffset = CGSizeMake(2, 2);
+    _descriptionTextView.layer.shadowOpacity = 1;
+    _descriptionTextView.layer.shadowRadius = 4;
+    _descriptionTextView.layer.cornerRadius = 30;
+    _descriptionTextView.layer.masksToBounds = NO;
 }
 
 -(void) setTask{
