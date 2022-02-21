@@ -208,7 +208,7 @@
         notificationContent.body = @"it's time to done this task!!";
         notificationContent.sound = [UNNotificationSound defaultSound];
         
-        UNTimeIntervalNotificationTrigger *timeNotification = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval: 10 repeats:NO];
+        UNTimeIntervalNotificationTrigger *timeNotification = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval: 3 repeats:NO];
         
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"UYLocalNotification" content:notificationContent trigger:timeNotification];
         
